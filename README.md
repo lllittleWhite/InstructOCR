@@ -73,3 +73,44 @@ The model training in the original paper uses 32 GPUs (4 nodes, 8 A100 GPUs per 
 
 
 ## Performance
+
+The end-to-end recognition performances of SPTS on four public benchmarks are:
+
+| ICDAR 2015 | Strong | Weak | Generic | Model |
+| ------- | ------ | ---- | ------- | ----- |
+| Base | 87.1 | 83.4 | 80.6 | [Link](https://drive.google.com/file/d/1cFcDPqFXvTowVfoH4wD767lszzlbJkJ9/view?usp=sharing) |
+| Instruct | 87.5 | 84.2 | 80.6 | [Link](https://drive.google.com/file/d/12sCDMS0XGrpEkCyBvP8zNUNjbTPWyUee/view?usp=sharing) |
+
+| ICDAR 2013 | None | Full | Model |
+| ------- | ---- | ---- | ----- |
+| Base | 94.4 | 93.3 | 91.2 | [Link](https://drive.google.com/file/d/1cFcDPqFXvTowVfoH4wD767lszzlbJkJ9/view?usp=sharing) |
+| Instruct | 94.9 | 94.1 | 91.7 | [Link](https://drive.google.com/file/d/12sCDMS0XGrpEkCyBvP8zNUNjbTPWyUee/view?usp=sharing) |
+
+| Dataset | None | Full | Model |
+| ------- | ---- | ---- | ----- |
+| Total-Text | 74.2 | 82.4 | [Link]() |
+
+## Evaluation
+
+Download the ground-truth files ([GoogleDrive](https://drive.google.com/file/d/1ztyjczfn3YdBf6hpLuV2Vs2UJPlRdAjm/view?usp=sharing), [BaiduNetDisk](https://pan.baidu.com/s/1ERkKR8L58ZVlB12SpCwEVQ) password: 35tr) and lexicons ([GoogleDrive](https://drive.google.com/file/d/1JxmuDsOZ-x_WO5lck2ZQZHRcjoUtUiLo/view?usp=sharing), [BaiduNetDisk](https://pan.baidu.com/s/1so_s94_XysLjlcWasos8mA) password: 9eml), and extracted them into the `evaluation` folder.
+
+```
+evaluation
+│  eval.py
+├─gt
+│  ├─gt_ic13
+│  ├─gt_ic15
+│  └─gt_totaltext
+└─lexicons
+    ├─ic13
+    ├─ic15
+    └─totaltext
+```
+
+Then the command for evaluating the inference result of Total-Text is:
+```
+python evaluation/eval.py \
+       --result_path ./output/totaltext/results/ep349/totaltext_val.json \
+       # --with_lexicon \ # uncomment this line if you want to evaluate with lexicons.
+       # --lexicon_type 0 # used for ICDAR2013 and ICDAR2015. 0: Generic; 1: Weak; 2: Strong.
+```
