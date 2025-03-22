@@ -61,7 +61,7 @@ The model training in the original paper uses 32 GPUs (4 nodes, 8 A100 GPUs per 
 
 ## Performance
 
-The end-to-end recognition performances of SPTS on public benchmarks are:
+The end-to-end recognition performances of InstructOCR on public benchmarks are:
 
 | ICDAR 2015 | Strong | Weak | Generic | Model |
 | ------- | ------ | ---- | ------- | ----- |
