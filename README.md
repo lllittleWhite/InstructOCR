@@ -28,44 +28,31 @@ pytorch==1.8.1 torchvision==0.9.1
 - ICDAR2015 [[paper]](https://rrc.cvc.uab.es/?ch=4) [[source]](https://rrc.cvc.uab.es/?ch=4). 
   - Download (0.1G) ([Google](https://drive.google.com/file/d/1THhzo_WH1RY5DlGdBfjRA_dwu9tAmQUE/view?usp=sharing), [BaiduNetDisk](https://pan.baidu.com/s/1x3EpYLRa4EtSMNg5JqszVg) password: wjrh) 
 
-<!-- Please download and extract the above datasets into the `data` folder following the file structure below.
+Please download and extract the above datasets into the `data` folder following the file structure below.
 
 ```
 data
-├─CTW1500
-│  ├─annotations
-│  │      test_ctw1500_maxlen25.json
-│  │      train_ctw1500_maxlen25_v2.json
-│  ├─ctwtest_text_image
-│  └─ctwtrain_text_image
 ├─icdar2013
-│  │  ic13_test.json
-│  │  ic13_train.json
+│  │  ic13_test.csv
+│  │  ic13_train.csv
 │  ├─test_images
 │  └─train_images
 ├─icdar2015
-│  │  ic15_test.json
-│  │  ic15_train.json
+│  │  ic15_test.csv
+│  │  ic15_train.csv
 │  ├─test_images
 │  └─train_images
-|- inversetext
-|  |- test_images
-|  └─ test_poly.json
 ├─mlt2017
-│  │  train.json
+│  │  train.csv
 │  └─MLT_train_images
 ├─syntext1
-│  │  train.json
+│  │  train.csv
 │  └─syntext_word_eng
 ├─syntext2
-│  │  train.json
+│  │  train.csv
 │  └─emcs_imgs
-└─totaltext
-    │  test.json
-    │  train.json
-    ├─test_images
-    └─train_images
-``` -->
+└─......
+```
 
 ## Train and finetune
 
@@ -74,17 +61,17 @@ The model training in the original paper uses 32 GPUs (4 nodes, 8 A100 GPUs per 
 
 ## Performance
 
-The end-to-end recognition performances of SPTS on four public benchmarks are:
+The end-to-end recognition performances of SPTS on public benchmarks are:
 
 | ICDAR 2015 | Strong | Weak | Generic | Model |
 | ------- | ------ | ---- | ------- | ----- |
 | Base | 87.1 | 83.4 | 80.6 | [Link](https://drive.google.com/file/d/1cFcDPqFXvTowVfoH4wD767lszzlbJkJ9/view?usp=sharing) |
 | Instruct | 87.5 | 84.2 | 80.6 | [Link](https://drive.google.com/file/d/12sCDMS0XGrpEkCyBvP8zNUNjbTPWyUee/view?usp=sharing) |
 
-| ICDAR 2013 | None | Full | Model |
-| ------- | ---- | ---- | ----- |
-| Base | 94.4 | 93.3 | 91.2 | [Link](https://drive.google.com/file/d/1cFcDPqFXvTowVfoH4wD767lszzlbJkJ9/view?usp=sharing) |
-| Instruct | 94.9 | 94.1 | 91.7 | [Link](https://drive.google.com/file/d/12sCDMS0XGrpEkCyBvP8zNUNjbTPWyUee/view?usp=sharing) |
+| ICDAR 2013 | Strong | Weak | Generic | Model |
+| ------- | ------ | ---- | ------- | ----- |
+| Base | 94.4 | 93.3 | 91.2 | [Link]() |
+| Instruct | 94.9 | 94.1 | 91.7 | [Link]() |
 
 | Dataset | None | Full | Model |
 | ------- | ---- | ---- | ----- |
