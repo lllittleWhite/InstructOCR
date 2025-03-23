@@ -1,0 +1,21 @@
+python3 -m torch.distributed.launch --nproc_per_node 8 --nnodes=4 --node_rank=$node_rank --master_addr=$master_addr --master_port=3141 --use_env main.py \
+        --data_root '/path/data/' \
+        --batch_size 10 \
+        --train_stage pretrain \
+        --max_size_train 1024 \
+        --lr 4.4e-4 \
+        --train_dataset totaltext_train:ic13_train:ic15_train:mlt_train:syntext1_train:syntext2_train:textocr_train:hiertext_train \
+        --val_dataset ic15_val \
+        --dec_layers 6 \
+        --max_length 25 \
+        --pad_rec \
+        --pre_norm \
+        --rotate_prob 0.3 \
+        --train \
+        --depths 6 \
+        --padding_bins 0 \
+        --epochs 200 \
+        --warmup_epochs 5 \
+        --train_point point \
+        --output_dir '/path/save/' \
+        --prefix 'pretrain'

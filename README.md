@@ -29,7 +29,7 @@ pytorch==1.8.1 torchvision==0.9.1
   - Download (0.1G) ([Google](https://drive.google.com/file/d/1THhzo_WH1RY5DlGdBfjRA_dwu9tAmQUE/view?usp=sharing), [BaiduNetDisk](https://pan.baidu.com/s/1x3EpYLRa4EtSMNg5JqszVg) password: wjrh) 
 
  -  TextOCR [[paper]](https://openaccess.thecvf.com/content/CVPR2021/html/Singh_TextOCR_Towards_Large-Scale_End-to-End_Reasoning_for_Arbitrary-Shaped_Scene_Text_CVPR_2021_paper.html) [[source]](https://textvqa.org/textocr/dataset/).
- 
+
  -  HierText [[paper]](https://arxiv.org/abs/2203.15143) [[source]](https://github.com/google-research-datasets/hiertext).
 
 Please download and extract the above datasets into the `data` folder following the file structure below.
@@ -111,6 +111,30 @@ python3 -m torch.distributed.launch --nproc_per_node 8 --nnodes=4 --node_rank=$n
         --prefix 'pretrain'
 ```
 
+## Inference
+We provide the test script for IC15 named "ic15_test.sh", the test script for IC13 and Totaltext named "ic13_totaltext_test.sh", and the script for VQA named "vqa.sh".
+For example, the command for the inference on IC15 is:
+```
+CUDA_VISIBLE_DEVICES=0 \
+python3  main.py \
+        --train_dataset ic15_train \
+        --val_dataset ic15_val \
+        --max_length 25 \
+        --data_root '/path/data/' \
+        --batch_size 1 \
+        --max_size_test 1920 \
+        --min_size_test 1280 \
+        --depths 6 \
+        --lr 0.00001 \
+        --pre_norm \
+        --num_workers 2 \
+        --eval \
+        --resume '/path/resume/' \
+        --output_dir '/path/save/' \
+        --padding_bins 0 \
+        --train_point point \
+        --pad_rec 
+```
 
 ## Performance
 
@@ -157,3 +181,12 @@ python evaluation/eval.py \
        # --with_lexicon \ # uncomment this line if you want to evaluate with lexicons.
        # --lexicon_type 0 # used for ICDAR2013 and ICDAR2015. 0: Generic; 1: Weak; 2: Strong.
 ```
+
+
+## Citation
+
+
+
+## Acknowledgement
+
+We sincerely thank [ODM](https://github.com/PriNing/ODM), [SPTS](https://github.com/shannanyinxiang/SPTS), [SPTSv2](https://github.com/bytedance/SPTSv2), and [GroundingDINO](https://github.com/IDEA-Research/GroundingDINO).
