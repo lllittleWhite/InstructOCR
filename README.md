@@ -27,8 +27,10 @@ pytorch==1.8.1 torchvision==0.9.1
  
 - ICDAR2015 [[paper]](https://rrc.cvc.uab.es/?ch=4) [[source]](https://rrc.cvc.uab.es/?ch=4). 
   - Download (0.1G) ([Google](https://drive.google.com/file/d/1THhzo_WH1RY5DlGdBfjRA_dwu9tAmQUE/view?usp=sharing), [BaiduNetDisk](https://pan.baidu.com/s/1x3EpYLRa4EtSMNg5JqszVg) password: wjrh) 
-  TextOCR [[paper]](https://openaccess.thecvf.com/content/CVPR2021/html/Singh_TextOCR_Towards_Large-Scale_End-to-End_Reasoning_for_Arbitrary-Shaped_Scene_Text_CVPR_2021_paper.html) [[source]](https://textvqa.org/textocr/dataset/).
-  HierText [[paper]](https://arxiv.org/abs/2203.15143) [[source]](https://github.com/google-research-datasets/hiertext).
+
+ -  TextOCR [[paper]](https://openaccess.thecvf.com/content/CVPR2021/html/Singh_TextOCR_Towards_Large-Scale_End-to-End_Reasoning_for_Arbitrary-Shaped_Scene_Text_CVPR_2021_paper.html) [[source]](https://textvqa.org/textocr/dataset/).
+ 
+ -  HierText [[paper]](https://arxiv.org/abs/2203.15143) [[source]](https://github.com/google-research-datasets/hiertext).
 
 Please download and extract the above datasets into the `data` folder following the file structure below.
 
@@ -58,9 +60,7 @@ data
 
 ## Train and finetune
 
-The model training in the original paper uses 32 GPUs (4 nodes, 8 A100 GPUs per node).
-
-For training:
+The model training in the original paper uses 32 GPUs (4 nodes, 8 A100 GPUs per node). We provide training scripts for both single-gpu and milti-gpu. Additionally, we offer scripts for instruction training and finetuning, which are located in the scripts directory.
 
 Single-GPU:
 ```
@@ -86,8 +86,7 @@ python3 -m torch.distributed.launch --master_port=3141 --nproc_per_node 1 --use_
         --prefix 'debug'
 
 ```
-Multi-GPU
-Pretrain1:
+Multi-GPU Pretrain1:
 ```
 python3 -m torch.distributed.launch --nproc_per_node 8 --nnodes=4 --node_rank=$node_rank --master_addr=$master_addr --master_port=3141 --use_env main.py \
         --data_root '/path/data/' \
@@ -111,8 +110,6 @@ python3 -m torch.distributed.launch --nproc_per_node 8 --nnodes=4 --node_rank=$n
         --output_dir '/path/save/' \
         --prefix 'pretrain'
 ```
-Pretrain2: scripts/pretrain2.sh
-Instruction: scripts/instruction.sh
 
 
 ## Performance
