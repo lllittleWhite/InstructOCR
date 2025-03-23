@@ -27,6 +27,8 @@ pytorch==1.8.1 torchvision==0.9.1
  
 - ICDAR2015 [[paper]](https://rrc.cvc.uab.es/?ch=4) [[source]](https://rrc.cvc.uab.es/?ch=4). 
   - Download (0.1G) ([Google](https://drive.google.com/file/d/1THhzo_WH1RY5DlGdBfjRA_dwu9tAmQUE/view?usp=sharing), [BaiduNetDisk](https://pan.baidu.com/s/1x3EpYLRa4EtSMNg5JqszVg) password: wjrh) 
+  TextOCR [[paper]](https://openaccess.thecvf.com/content/CVPR2021/html/Singh_TextOCR_Towards_Large-Scale_End-to-End_Reasoning_for_Arbitrary-Shaped_Scene_Text_CVPR_2021_paper.html) [[source]](https://textvqa.org/textocr/dataset/).
+  HierText [[paper]](https://arxiv.org/abs/2203.15143) [[source]](https://github.com/google-research-datasets/hiertext).
 
 Please download and extract the above datasets into the `data` folder following the file structure below.
 
@@ -58,24 +60,81 @@ data
 
 The model training in the original paper uses 32 GPUs (4 nodes, 8 A100 GPUs per node).
 
+For training:
+
+Single-GPU:
+```
+python3 -m torch.distributed.launch --master_port=3141 --nproc_per_node 1 --use_env main.py \
+        --data_root '/path/data/' \
+        --batch_size 2 \
+        --train_stage pretrain \
+        --lr 4.4e-4 \
+        --max_size_train 1024 \
+        --train_dataset ic15_train \
+        --val_dataset ic15_val \
+        --dec_layers 6 \
+        --max_length 25 \
+        --pad_rec \
+        --pre_norm \
+        --rotate_prob 0.3 \
+        --train \
+        --depths 6 \
+        --padding_bins 0 \
+        --epochs 200 \
+        --warmup_epochs 5 \
+        --output_dir '/path/save/' \
+        --prefix 'debug'
+
+```
+Multi-GPU
+Pretrain1:
+```
+python3 -m torch.distributed.launch --nproc_per_node 8 --nnodes=4 --node_rank=$node_rank --master_addr=$master_addr --master_port=3141 --use_env main.py \
+        --data_root '/path/data/' \
+        --batch_size 10 \
+        --train_stage pretrain \
+        --max_size_train 1024 \
+        --lr 4.4e-4 \
+        --train_dataset totaltext_train:ic13_train:ic15_train:mlt_train:syntext1_train:syntext2_train:textocr_train:hiertext_train \
+        --val_dataset ic15_val \
+        --dec_layers 6 \
+        --max_length 25 \
+        --pad_rec \
+        --pre_norm \
+        --rotate_prob 0.3 \
+        --train \
+        --depths 6 \
+        --padding_bins 0 \
+        --epochs 200 \
+        --warmup_epochs 5 \
+        --train_point point \
+        --output_dir '/path/save/' \
+        --prefix 'pretrain'
+```
+Pretrain2: scripts/pretrain2.sh
+Instruction: scripts/instruction.sh
+
 
 ## Performance
 
-The end-to-end recognition performances of InstructOCR on public benchmarks are:
+The end-to-end recognition performances of InstructOCR with and without instructions on public benchmarks are:
 
 | ICDAR 2015 | Strong | Weak | Generic | Model |
 | ------- | ------ | ---- | ------- | ----- |
 | Base | 87.1 | 83.4 | 80.6 | [Link](https://drive.google.com/file/d/1cFcDPqFXvTowVfoH4wD767lszzlbJkJ9/view?usp=sharing) |
-| Instruct | 87.5 | 84.2 | 80.6 | [Link](https://drive.google.com/file/d/12sCDMS0XGrpEkCyBvP8zNUNjbTPWyUee/view?usp=sharing) |
+| Instruction | 87.5 | 84.2 | 80.6 | [Link](https://drive.google.com/file/d/12sCDMS0XGrpEkCyBvP8zNUNjbTPWyUee/view?usp=sharing) |
 
 | ICDAR 2013 | Strong | Weak | Generic | Model |
 | ------- | ------ | ---- | ------- | ----- |
 | Base | 94.4 | 93.3 | 91.2 | [Link]() |
-| Instruct | 94.9 | 94.1 | 91.7 | [Link]() |
+| Instruction | 94.9 | 94.1 | 91.7 | [Link]() |
 
-| Dataset | None | Full | Model |
+| Total-Text | None | Full | Model |
 | ------- | ---- | ---- | ----- |
-| Total-Text | 74.2 | 82.4 | [Link]() |
+| Base | 82.6 | 87.5 | [Link]() |
+| Instruction | 83.4 | 88.3 | [Link]() |
+
+
 
 ## Evaluation
 

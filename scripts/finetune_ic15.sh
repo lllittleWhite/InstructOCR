@@ -1,0 +1,25 @@
+python3 -m torch.distributed.launch --nproc_per_node 8 --nnodes=1 --node_rank=$node_rank --master_addr=$master_addr --master_port=3141 --use_env main.py \
+        --data_root '/path/data/' \
+        --batch_size 2 \
+        --train_stage prompt \
+        --max_size_train 1920 \
+        --min_size_train 704 736 768 800 832 864 896 928 960 992 1024 1056 1088 1120 1152 1184 1216 1248 1280 1312 1344 1376 1408 1440 1472 1504 1536 1568 1600 \
+        --num_workers 4 \
+        --lr 1e-5 \
+        --train_dataset ic15_train \
+        --val_dataset ic15_val \
+        --dec_layers 6 \
+        --max_length 25 \
+        --pad_rec \
+        --pre_norm \
+        --rotate_prob 0.3 \
+        --train \
+        --depths 6 \
+        --padding_bins 0 \
+        --epochs 430 \
+        --warmup_epochs 5 \
+        --train_point point \
+        --output_dir 'path/save/' \
+        --prefix 'finetune' \
+        --resume /path/resume/ \
+        --finetune 
