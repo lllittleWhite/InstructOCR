@@ -376,7 +376,7 @@ class InstructOCR(nn.Module):
         if isinstance(samples, (list, torch.Tensor)):
             samples = nested_tensor_from_tensor_list(samples)
         images = samples.tensors
-        all_feature, clip_image_ori, att_maps = self.visual(images)
+        all_feature, image_ori, att_maps = self.visual(images)
         encoded_texts = self.encode_text(text)
 
         decode_image_feature = self.final(all_feature[-1])
@@ -398,7 +398,7 @@ def build(args):
     transformer = build_transformer(args)
 
     num_classes = args.num_classes
-    model = SPTSv2(args, transformer, num_classes)
+    model = InstructOCR(args, transformer, num_classes)
 
     weight = torch.ones(num_classes)
     weight[args.end_index] = 0.01; weight[args.noise_index] = 0.01
