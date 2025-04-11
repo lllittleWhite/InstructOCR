@@ -147,13 +147,13 @@ The end-to-end recognition performances of InstructOCR with and without instruct
 
 | ICDAR 2013 | Strong | Weak | Generic | Model |
 | ------- | ------ | ---- | ------- | ----- |
-| Base | 94.4 | 93.3 | 91.2 | [Link]() |
-| Instruction | 94.9 | 94.1 | 91.7 | [Link]() |
+| Base | 94.4 | 93.3 | 91.2 | [Link](https://drive.google.com/file/d/1-_mRL3nNZwE_B9AvfGmSXesu0Z-tNc4u/view?usp=sharing) |
+| Instruction | 94.9 | 94.1 | 91.7 | [Link](https://drive.google.com/file/d/1cGJasIWmZcBXXXf_f2DyzSlcCPI52uek/view?usp=sharing) |
 
 | Total-Text | None | Full | Model |
 | ------- | ---- | ---- | ----- |
-| Base | 82.6 | 87.5 | [Link]() |
-| Instruction | 83.4 | 88.3 | [Link]() |
+| Base | 82.6 | 87.5 | [Link](https://drive.google.com/file/d/1RUUoqUll7pBGVFU7VSvzs0zoU-wzG2Br/view?usp=sharing) |
+| Instruction | 83.4 | 88.3 | [Link](https://drive.google.com/file/d/1VGZcE9acLwFNE8_VGLTTCfG3SZXNMtKt/view?usp=sharing) |
 
 
 
