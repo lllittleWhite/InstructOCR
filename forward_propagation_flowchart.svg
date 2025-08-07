@@ -1,0 +1,132 @@
+<svg width="1200" height="800" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .box { fill: #e8f4fd; stroke: #2196f3; stroke-width: 2; }
+      .input-box { fill: #e8f5e8; stroke: #4caf50; stroke-width: 2; }
+      .fusion-box { fill: #fff3e0; stroke: #ff9800; stroke-width: 2; }
+      .output-box { fill: #fce4ec; stroke: #e91e63; stroke-width: 2; }
+      .text { font-family: Arial, sans-serif; font-size: 12px; text-anchor: middle; }
+      .title { font-family: Arial, sans-serif; font-size: 14px; font-weight: bold; text-anchor: middle; }
+      .arrow { stroke: #333; stroke-width: 2; fill: none; marker-end: url(#arrowhead); }
+      .process-text { font-size: 10px; fill: #666; }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333" />
+    </marker>
+  </defs>
+  
+  <!-- Title -->
+  <text x="600" y="25" class="title" style="font-size: 18px;">InstructOCR 前向传播流程图</text>
+  
+  <!-- Input Layer -->
+  <rect x="50" y="60" width="120" height="60" class="input-box" rx="5"/>
+  <text x="110" y="85" class="title">输入图像</text>
+  <text x="110" y="100" class="text">[B, 3, H, W]</text>
+  
+  <rect x="250" y="60" width="120" height="60" class="input-box" rx="5"/>
+  <text x="310" y="85" class="title">输入文本</text>
+  <text x="310" y="100" class="text">指令文本</text>
+  
+  <!-- Vision Backbone -->
+  <rect x="50" y="160" width="120" height="80" class="box" rx="5"/>
+  <text x="110" y="185" class="title">ResNet Backbone</text>
+  <text x="110" y="200" class="text">视觉特征提取</text>
+  <text x="110" y="215" class="text">[B, 2048, H', W']</text>
+  
+  <!-- Text Processing -->
+  <rect x="250" y="160" width="120" height="40" class="box" rx="5"/>
+  <text x="310" y="180" class="title">BERT Tokenizer</text>
+  <text x="310" y="195" class="text">[B, 77]</text>
+  
+  <rect x="250" y="220" width="120" height="40" class="box" rx="5"/>
+  <text x="310" y="240" class="title">BERT Embedder</text>
+  <text x="310" y="255" class="text">[B, 77, 768]</text>
+  
+  <!-- Feature Processing -->
+  <rect x="50" y="280" width="120" height="60" class="box" rx="5"/>
+  <text x="110" y="300" class="title">Final Conv</text>
+  <text x="110" y="315" class="text">1x1 卷积降维</text>
+  <text x="110" y="330" class="text">[B, 512, H', W']</text>
+  
+  <rect x="250" y="280" width="120" height="60" class="box" rx="5"/>
+  <text x="310" y="300" class="title">Text Projection</text>
+  <text x="310" y="315" class="text">线性投影</text>
+  <text x="310" y="330" class="text">[B, 77, 256]</text>
+  
+  <!-- Position Encoding -->
+  <rect x="50" y="380" width="120" height="60" class="box" rx="5"/>
+  <text x="110" y="400" class="title">Position Encoding</text>
+  <text x="110" y="415" class="text">正弦位置编码</text>
+  <text x="110" y="430" class="text">[B, 512, H', W']</text>
+  
+  <!-- Feature Fusion -->
+  <rect x="450" y="280" width="200" height="160" class="fusion-box" rx="5"/>
+  <text x="550" y="305" class="title">TransformerEncoder</text>
+  <text x="550" y="325" class="text">特征融合模块</text>
+  
+  <rect x="470" y="340" width="160" height="30" class="box" rx="3"/>
+  <text x="550" y="358" class="text">BiAttentionBlock × 3</text>
+  
+  <rect x="470" y="380" width="160" height="30" class="box" rx="3"/>
+  <text x="550" y="398" class="text">TransformerEncoderLayer</text>
+  
+  <text x="550" y="425" class="text">输出: [B, HW, 512]</text>
+  
+  <!-- Transformer Decoder -->
+  <rect x="750" y="280" width="200" height="160" class="box" rx="5"/>
+  <text x="850" y="305" class="title">TransformerDecoder</text>
+  <text x="850" y="325" class="text">序列生成模块</text>
+  
+  <rect x="770" y="340" width="160" height="30" class="box" rx="3"/>
+  <text x="850" y="358" class="text">DecoderEmbeddings</text>
+  
+  <rect x="770" y="380" width="160" height="30" class="box" rx="3"/>
+  <text x="850" y="398" class="text">TransformerDecoderLayer</text>
+  
+  <text x="850" y="425" class="text">输出: [B, L, 512]</text>
+  
+  <!-- Output -->
+  <rect x="750" y="500" width="200" height="80" class="output-box" rx="5"/>
+  <text x="850" y="525" class="title">最终输出</text>
+  <text x="850" y="545" class="text">训练: 序列logits</text>
+  <text x="850" y="560" class="text">推理: 生成序列</text>
+  <text x="850" y="575" class="text">[坐标 + 文本]</text>
+  
+  <!-- Arrows -->
+  <!-- Image processing flow -->
+  <line x1="110" y1="120" x2="110" y2="160" class="arrow"/>
+  <line x1="110" y1="240" x2="110" y2="280" class="arrow"/>
+  <line x1="110" y1="340" x2="110" y2="380" class="arrow"/>
+  
+  <!-- Text processing flow -->
+  <line x1="310" y1="120" x2="310" y2="160" class="arrow"/>
+  <line x1="310" y1="200" x2="310" y2="220" class="arrow"/>
+  <line x1="310" y1="260" x2="310" y2="280" class="arrow"/>
+  
+  <!-- To fusion -->
+  <line x1="170" y1="360" x2="450" y2="360" class="arrow"/>
+  <line x1="370" y1="310" x2="450" y2="310" class="arrow"/>
+  
+  <!-- To decoder -->
+  <line x1="650" y1="360" x2="750" y2="360" class="arrow"/>
+  
+  <!-- To output -->
+  <line x1="850" y1="440" x2="850" y2="500" class="arrow"/>
+  
+  <!-- Labels for data flow -->
+  <text x="300" y="355" class="process-text">视觉特征</text>
+  <text x="400" y="305" class="process-text">文本特征</text>
+  <text x="700" y="355" class="process-text">融合特征</text>
+  
+  <!-- BiAttention Detail -->
+  <rect x="450" y="480" width="200" height="100" class="fusion-box" rx="5" stroke-dasharray="5,5"/>
+  <text x="550" y="500" class="title">BiAttentionBlock 详细</text>
+  <text x="550" y="520" class="text">Query: 视觉特征</text>
+  <text x="550" y="535" class="text">Key/Value: 文本特征</text>
+  <text x="550" y="550" class="text">交叉注意力机制</text>
+  <text x="550" y="565" class="text">v_new = v + γ * attn(v, l)</text>
+  
+  <!-- Connection to detail -->
+  <line x1="550" y1="440" x2="550" y2="480" class="arrow" stroke-dasharray="3,3"/>
+  
+</svg>
